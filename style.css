@@ -1,0 +1,167 @@
+/* 1. Base Variables - Light Mode (Jason Samuel aesthetic) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --link-color: #0000ee; 
+    --link-hover: #000080;
+    --subtitle-color: #333333;
+}
+
+/* 2. Dark Mode Override - Pitch Black */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --link-color: #66b3ff; 
+        --link-hover: #99ccff;
+        --subtitle-color: #cccccc;
+    }
+}
+
+/* 3. Global Reset & Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+}
+
+/* 4. Text Formatting */
+h1 {
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    line-height: 1.2;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    color: var(--subtitle-color);
+}
+
+p {
+    font-size: clamp(0.95rem, 3vw, 1.05rem);
+    margin: 15px 0;
+}
+
+h2 {
+    font-size: clamp(1.1rem, 3.5vw, 1.2rem);
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+ol, ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 15px;
+    font-size: clamp(0.95rem, 3vw, 1.05rem);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--link-hover);
+}
+
+
+/* =========================================
+   MOBILE LAYOUT (Portrait / Phone Defaults)
+   ========================================= */
+
+.page-wrapper {
+    display: grid;
+    /* Splits the top section perfectly in half */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 5vh 5vw;
+}
+
+.photo-container {
+    grid-column: 1;
+}
+
+.profile-pic {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5; /* Keeps the photo from stretching weirdly */
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* display: contents pushes the child elements into the main grid */
+.content-container {
+    display: contents; 
+}
+
+.title-header {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically centers name next to photo */
+}
+
+.rest-of-content {
+    /* Spans the full width below the photo and name */
+    grid-column: 1 / -1; 
+    margin-top: 10px;
+}
+
+
+/* =========================================
+   DESKTOP & LANDSCAPE LAYOUT (Tablets/Monitors)
+   ========================================= */
+
+@media (min-width: 768px) {
+    .page-wrapper {
+        display: flex;
+        align-items: flex-start;
+        width: 100%; /* Forces the wrapper to use the full viewport width */
+        margin: 0;
+        padding: 5vh 5vw;
+        gap: 5vw; /* Uses a percentage of the screen width for the gap instead of fixed pixels */
+    }
+
+    .photo-container {
+        flex: 0 0 35%; /* The photo section stays exactly at 35% of the screen width */
+        height: 90vh;  
+        position: sticky; 
+        top: 5vh;
+    }
+
+    .profile-pic {
+        width: 100%; /* Ensures the picture fills its 35% column horizontally */
+        height: 100%; 
+        object-fit: contain; /* Crops beautifully without stretching the image */
+    }
+
+    .content-container {
+        display: block; 
+        flex: 1; /* The text content flexibly fills the remaining 65% of the screen */
+        padding-bottom: 5vh;
+    }
+
+    .title-header {
+        margin-bottom: 40px;
+    }
+    
+    /* Optional: Prevents text lines from getting too long on ultra-wide monitors for readability */
+    .rest-of-content p, 
+    .rest-of-content ol, 
+    .rest-of-content ul {
+        max-width: 900px; 
+    }
+}
