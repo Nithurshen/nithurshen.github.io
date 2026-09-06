@@ -1,167 +1,301 @@
-/* 1. Base Variables - Light Mode (Jason Samuel aesthetic) */
 :root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --link-color: #0000ee; 
-    --link-hover: #000080;
-    --subtitle-color: #333333;
+  --bg: #ffffff;
+  --fg: #14161a;
+  --muted: #5c6470;
+  --link: #0b40c4;
+  --rule: #e4e6ea;
 }
 
-/* 2. Dark Mode Override - Pitch Black */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #000000;
-        --text-color: #ffffff;
-        --link-color: #66b3ff; 
-        --link-hover: #99ccff;
-        --subtitle-color: #cccccc;
-    }
+  :root {
+    --bg: #121212;
+    --fg: #e7e7e7;
+    --muted: #9099a4;
+    --link: #8ab0ff;
+    --rule: #2a2c30;
+  }
 }
 
-/* 3. Global Reset & Typography */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
-    overflow-wrap: break-word;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  line-height: 1.65;
+  overflow-wrap: break-word;
 }
 
-/* 4. Text Formatting */
-h1 {
-    font-size: clamp(1.3rem, 4vw, 1.7rem);
-    line-height: 1.2;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+main {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 5vw, 4rem) clamp(1.1rem, 5vw, 2rem);
 }
 
-.subtitle {
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
-    color: var(--subtitle-color);
-}
-
-p {
-    font-size: clamp(0.95rem, 3vw, 1.05rem);
-    margin: 15px 0;
-}
-
-h2 {
-    font-size: clamp(1.1rem, 3.5vw, 1.2rem);
-    margin-top: 40px;
-    margin-bottom: 15px;
-}
-
-ol, ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 15px;
-    font-size: clamp(0.95rem, 3vw, 1.05rem);
+@media (min-width: 1024px) {
+  main {
+    max-width: min(90vw, 64rem);
+    padding-inline: clamp(2rem, 4vw, 3.5rem);
+  }
 }
 
 a {
-    color: var(--link-color);
-    text-decoration: none;
+  color: var(--link);
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
-    color: var(--link-hover);
+  text-decoration: underline;
 }
 
-
-/* =========================================
-   MOBILE LAYOUT (Portrait / Phone Defaults)
-   ========================================= */
-
-.page-wrapper {
-    display: grid;
-    /* Splits the top section perfectly in half */
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 5vh 5vw;
+a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-.photo-container {
-    grid-column: 1;
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
 }
 
-.profile-pic {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5; /* Keeps the photo from stretching weirdly */
-    object-fit: contain;
-    border-radius: 4px;
+.math {
+  font-style: italic;
 }
 
-/* display: contents pushes the child elements into the main grid */
-.content-container {
-    display: contents; 
+.meta {
+  color: var(--muted);
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
 }
 
-.title-header {
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Vertically centers name next to photo */
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 3vw, 1.4rem);
+  flex-wrap: wrap;
 }
 
-.rest-of-content {
-    /* Spans the full width below the photo and name */
-    grid-column: 1 / -1; 
-    margin-top: 10px;
+.avatar {
+  width: clamp(76px, 18vw, 116px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
+.identity {
+  min-width: 0;
+}
 
-/* =========================================
-   DESKTOP & LANDSCAPE LAYOUT (Tablets/Monitors)
-   ========================================= */
+h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 1.1vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
 
-@media (min-width: 768px) {
-    .page-wrapper {
-        display: flex;
-        align-items: flex-start;
-        width: 100%; /* Forces the wrapper to use the full viewport width */
-        margin: 0;
-        padding: 5vh 5vw;
-        gap: 5vw; /* Uses a percentage of the screen width for the gap instead of fixed pixels */
-    }
+.handle {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.9em;
+}
 
-    .photo-container {
-        flex: 0 0 35%; /* The photo section stays exactly at 35% of the screen width */
-        height: 90vh;  
-        position: sticky; 
-        top: 5vh;
-    }
+.bio {
+  margin: 0.5rem 0 0;
+  max-width: 42rem;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
 
-    .profile-pic {
-        width: 100%; /* Ensures the picture fills its 35% column horizontally */
-        height: 100%; 
-        object-fit: contain; /* Crops beautifully without stretching the image */
-    }
+.cv {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  margin: clamp(1.1rem, 3vw, 1.5rem) 0 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
 
-    .content-container {
-        display: block; 
-        flex: 1; /* The text content flexibly fills the remaining 65% of the screen */
-        padding-bottom: 5vh;
-    }
+.toc {
+  margin: clamp(1.1rem, 3vw, 1.5rem) 0 0;
+}
 
-    .title-header {
-        margin-bottom: 40px;
-    }
-    
-    /* Optional: Prevents text lines from getting too long on ultra-wide monitors for readability */
-    .rest-of-content p, 
-    .rest-of-content ol, 
-    .rest-of-content ul {
-        max-width: 900px; 
-    }
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+
+.toc a {
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+section {
+  margin-top: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+h2 {
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entries > li + li {
+  margin-top: 1.15rem;
+}
+
+.entry-title {
+  margin: 0;
+}
+
+.entry-title strong {
+  font-weight: 600;
+}
+
+.entry-line {
+  margin: 0.1rem 0 0;
+  font-size: 0.94em;
+}
+
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.1rem 0.9rem;
+}
+
+.split-main {
+  min-width: 0;
+}
+
+.split-side {
+  color: var(--muted);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.points {
+  list-style: none;
+  margin: 0.3rem 0 0;
+  padding: 0;
+}
+
+.points > li {
+  position: relative;
+  padding-left: 1.05rem;
+  margin-top: 0.22rem;
+  color: var(--muted);
+  font-size: 0.93em;
+}
+
+.points > li::before {
+  content: "\2022";
+  position: absolute;
+  left: 0.2rem;
+  top: 0;
+}
+
+.points.flush > li::before {
+  content: none;
+}
+
+section > .points > li {
+  margin-top: 0.3rem;
+}
+
+section > .points > li:first-child {
+  margin-top: 0;
+}
+
+#references .points > li {
+  margin-top: 0.7rem;
+}
+
+#references .points > li:first-child {
+  margin-top: 0;
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 0.35rem clamp(1rem, 4vw, 2rem);
+}
+
+.links li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+}
+
+@media (pointer: coarse) {
+  .links li {
+    padding: 0.4rem 0;
+  }
+}
+
+footer {
+  margin-top: clamp(2.5rem, 7vw, 4rem);
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+footer p {
+  margin: 0;
+}
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --muted: #444444;
+    --link: #000000;
+    --rule: #cccccc;
+  }
+
+  .avatar {
+    display: none;
+  }
+
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #444444;
+  }
 }
